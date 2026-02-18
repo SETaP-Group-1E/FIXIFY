@@ -1,0 +1,119 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post a Job | Fixify</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --fixify-blue: #1a56a3;
+            --fixify-dark: #0d4a8c;
+            --fixify-light: #e6f0fa;
+        }
+        body {
+            background-color: #f8fbff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-svg {
+            width: 100px;
+            height: auto;
+            fill: white;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+        .brand-title {
+            color: var(--fixify-dark);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(26, 86, 163, 0.08);
+            padding: 2rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .btn-success {
+            background-color: var(--fixify-blue);
+            border-color: var(--fixify-dark);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+        }
+        .btn-success:hover {
+            background-color: var(--fixify-dark);
+        }
+        .btn-link {
+            color: var(--fixify-blue);
+            font-weight: 600;
+        }
+        .btn-link:hover {
+            text-decoration: underline;
+            color: var(--fixify-dark);
+        }
+        .form-control:focus {
+            border-color: var(--fixify-blue);
+            box-shadow: 0 0 0 0.25rem rgba(26, 86, 163, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Logo & Title -->
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/Fixify.png') }}" 
+                alt="Fixify Logo" 
+                class="logo-img"
+                width="150" height="150">
+            <h1 class="brand-title mt-3">Fixify</h1>
+            <p class="text-muted">Find trusted home service professionals fast & reliable</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="form-card">
+                    <form method="POST">
+                        <div class="mb-4">
+                            <label class="form-label">Job Title</label>
+                            <input type="text" name="title" class="form-control form-control-lg" placeholder="e.g., Fix leaky faucet" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4" placeholder="Describe what you need help with..." required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="location" class="form-control" placeholder="e.g., Brooklyn, NY" required>
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle-fill me-2"></i>Post Job
+                            </button>
+                            <a href="/" class="btn btn-link text-center">← Back to Jobs</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.js"></script>
+</body>
+</html>
+<html>
+<head>
+    <title>Post a Job</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+</html>
