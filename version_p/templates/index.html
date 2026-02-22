@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post a Job | Fixify</title>
+    <title>Fixify — Home Services</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -21,7 +21,7 @@
             margin-bottom: 2rem;
         }
         .logo-svg {
-            width: 100px;
+            width: 120px;
             height: auto;
             fill: white;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
@@ -31,54 +31,60 @@
             font-weight: 700;
             letter-spacing: -0.5px;
         }
-        .form-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(26, 86, 163, 0.08);
-            padding: 2rem;
-        }
-        .form-label {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        .btn-success {
+        .btn-primary {
             background-color: var(--fixify-blue);
             border-color: var(--fixify-dark);
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
         }
-        .btn-success:hover {
+        .btn-primary:hover {
             background-color: var(--fixify-dark);
+            border-color: #0a3a70;
         }
-        .btn-link {
-            color: var(--fixify-blue);
-            font-weight: 600;
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(26, 86, 163, 0.08);
+            border: 1px solid #e0e7f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 1.5rem;
         }
-        .btn-link:hover {
-            text-decoration: underline;
-            color: var(--fixify-dark);
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(26, 86, 163, 0.15);
         }
-        .form-control:focus {
-            border-color: var(--fixify-blue);
-            box-shadow: 0 0 0 0.25rem rgba(26, 86, 163, 0.25);
+        .badge {
+            font-weight: 500;
+            padding: 0.35em 0.6em;
         }
-        .category-icon {
-            margin-right: 0.5rem;
-            width: 18px;
-            height: 18px;
-            display: inline-block;
+        .empty-state {
+            background: white;
+            border-radius: 10px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            border: 2px dashed #cbd9ed;
+        }
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .meta-item {
+            background: #eef4fc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
         }
         .urgency-high {
-            background-color: #ffebee;
-            border-color: #ffcdd2;
+            background: #ffebee;
+            color: #b71c1c;
         }
         .urgency-medium {
-            background-color: #fff8e1;
-            border-color: #ffecb3;
+            background: #fff8e1;
+            color: #e65100;
         }
         .urgency-low {
-            background-color: #e8f5e9;
-            border-color: #c8e6c9;
+            background: #e8f5e9;
+            color: #1b5e20;
         }
     </style>
 </head>
@@ -95,96 +101,69 @@
                 <path d="M100 160L80 180L100 200L120 180L100 160Z" fill="white"/>
                 <text x="120" y="225" text-anchor="middle" fill="white" font-size="32" font-weight="700" font-family="sans-serif">FIXIFY</text>
             </svg>
-            <h1 class="brand-title mt-3">Post a Home Service Job</h1>
-            <p class="text-muted">Help is just one click away</p>
+            <h1 class="brand-title mt-3">Fixify</h1>
+            <p class="text-muted">Find trusted home service pros — fast & reliable</p>
         </div>
 
-        <!-- Form Card -->
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8">
-                <div class="form-card">
-                    <form method="POST">
-                        <div class="mb-4">
-                            <label class="form-label">Job Title</label>
-                            <input type="text" name="title" class="form-control form-control-lg" placeholder="e.g., Fix leaky faucet" required>
-                        </div>
+        <!-- Post Button -->
+        <div class="text-center mb-5">
+            <a href="/post" class="btn btn-primary btn-lg px-4 py-3 shadow-sm">
+                <i class="bi bi-plus-circle me-2"></i>Post a New Job
+            </a>
+        </div>
 
-                        <div class="mb-4">
-                            <label class="form-label">Description</label>
-                            <textarea name="description" class="form-control" rows="4" placeholder="Describe what you need help with..." required></textarea>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label">Category</label>
-                            <select name="category" class="form-select" required>
-                                <option value="" disabled selected>Select a service category</option>
-                                <option value="Plumbing">💧 Plumbing</option>
-                                <option value="Electrical">⚡ Electrical</option>
-                                <option value="Cleaning">🧹 Cleaning</option>
-                                <option value="Gardening">🌿 Gardening</option>
-                                <option value="Painting">🎨 Painting</option>
-                                <option value="HVAC">❄️ HVAC</option>
-                                <option value="Carpentry">🪵 Carpentry</option>
-                                <option value="Other">🔧 Other</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Urgency Level</label>
-                            <div class="d-grid gap-2">
-                                <div class="form-check p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyHigh" value="High" required>
-                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyHigh">
-                                        <span><i class="bi bi-exclamation-circle-fill text-danger me-2"></i> High Urgency</span>
-                                        <small class="text-muted">Immediate attention needed</small>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-check p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyMedium" value="Medium" required>
-                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyMedium">
-                                        <span><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Medium Urgency</span>
-                                        <small class="text-muted">Within 2-3 days</small>
-                                    </label>
-                                </div>
-                                
-                                <div class="form-check p-3 border rounded">
-                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyLow" value="Low" required>
-                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyLow">
-                                        <span><i class="bi bi-check-circle-fill text-success me-2"></i> Low Urgency</span>
-                                        <small class="text-muted">Within a week</small>
-                                    </label>
-                                </div>
+        <!-- Jobs List -->
+        {% if jobs %}
+            <div class="row g-4">
+                {% for job in jobs %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 border-0">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0 flex-grow-1">{{ job.title }}</h5>
+                                <span class="badge bg-light text-dark">{{ job.location }}</span>
+                            </div>
+                            <p class="card-text text-secondary flex-grow-1">{{ job.description }}</p>
+                            
+                            <div class="job-meta">
+                                <span class="meta-item bg-primary text-white">
+                                    <i class="bi bi-tag me-1"></i>{{ job.category }}
+                                </span>
+                                <span class="meta-item {% if job.urgency == 'High' %}urgency-high{% elif job.urgency == 'Medium' %}urgency-medium{% else %}urgency-low{% endif %}">
+                                    <i class="bi bi-exclamation-circle me-1"></i>{{ job.urgency }}
+                                </span>
+                                <span class="meta-item">
+                                    <i class="bi bi-clock me-1"></i>{{ job.timing_window }}
+                                </span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>
+                                    {{ job.created_at.strftime('%b %d') }}
+                                </small>
+                                <form action="{{ url_for('delete_job', id=job.id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" 
+                                            onclick="return confirm('Are you sure you want to delete this job?')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label">Preferred Timing</label>
-                            <select name="timing_window" class="form-select" required>
-                                <option value="" disabled selected>Select your preferred timing</option>
-                                <option value="Morning (8am-12pm)">🌅 Morning (8am-12pm)</option>
-                                <option value="Afternoon (12pm-5pm)">🌇 Afternoon (12pm-5pm)</option>
-                                <option value="Evening (5pm-9pm)">🌃 Evening (5pm-9pm)</option>
-                                <option value="Flexible">🔄 Flexible - I can adjust</option>
-                                <option value="Weekend Only">📅 Weekend Only</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label">Location</label>
-                            <input type="text" name="location" class="form-control" placeholder="e.g., Brooklyn, NY" required>
-                        </div>
-
-                        <div class="d-grid gap-3">
-                            <button type="submit" class="btn btn-success btn-lg">
-                                <i class="bi bi-check-circle-fill me-2"></i>Post Job
-                            </button>
-                            <a href="/" class="btn btn-link text-center">← Back to Jobs</a>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-        </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="mb-3">
+                    <i class="bi bi-tools" style="font-size: 3rem; color: #a0c4e8;"></i>
+                </div>
+                <h3>No jobs yet</h3>
+                <p class="text-muted">Be the first to post a home service request!</p>
+                <a href="/post" class="btn btn-outline-primary mt-2">Post Your Job →</a>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
