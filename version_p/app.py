@@ -13,7 +13,10 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///jobs.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+# FIX: Use proper path handling for Windows
+base_dir = os.path.abspath(os.path.dirname(__file__))
+app.config['UPLOAD_FOLDER'] = os.path.join(base_dir, 'static', 'uploads')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
@@ -30,15 +33,14 @@ class Job(db.Model):
     category = db.Column(db.String(50), nullable=False)
     urgency = db.Column(db.String(20), nullable=False)
     timing_window = db.Column(db.String(50), nullable=False)
-    photo_filename = db.Column(db.String(255))  # New field for photo filename
+    budget = db.Column(db.Float)  # New field for budget amount
+    is_negotiable = db.Column(db.Boolean, default=False)  # New field for negotiability
+    photo_filename = db.Column(db.String(255))  # Photo filename
     created_at = db.Column(db.DateTime, default=datetime.now)
 
 @app.before_request
 def create_tables():
-    import os
-    # If database exists but needs schema update, delete it for this demo
-    if os.path.exists('jobs.db'):
-        os.remove('jobs.db')
+    # Don't delete database on every start - just create if needed
     db.create_all()
 
 @app.route('/')
@@ -56,8 +58,23 @@ def post_job():
             if file and allowed_file(file.filename):
                 # Secure the filename and save it
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(file_path)
                 photo_filename = filename
+                print(f"✅ Saved photo to: {file_path}")
+        
+        # Process budget fields
+        budget = None
+        is_negotiable = False
+        
+        if request.form.get('budget_amount'):
+            try:
+                budget = float(request.form['budget_amount'])
+            except (ValueError, TypeError):
+                pass
+                
+        if request.form.get('is_negotiable') == 'yes':
+            is_negotiable = True
         
         new_job = Job(
             title=request.form['title'],
@@ -66,10 +83,13 @@ def post_job():
             category=request.form['category'],
             urgency=request.form['urgency'],
             timing_window=request.form['timing_window'],
+            budget=budget,
+            is_negotiable=is_negotiable,
             photo_filename=photo_filename
         )
         db.session.add(new_job)
         db.session.commit()
+        print(f"✅ Job posted with budget: £{budget} (negotiable: {is_negotiable})")
         return redirect(url_for('index'))
     return render_template('post.html')
 
@@ -79,14 +99,16 @@ def delete_job(id):
     # Delete the associated photo file if it exists
     if job.photo_filename:
         try:
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], job.photo_filename))
-        except:
-            pass
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], job.photo_filename)
+            print(f"🗑️ Deleting photo: {file_path}")
+            os.remove(file_path)
+        except Exception as e:
+            print(f"❌ Error deleting photo: {e}")
     db.session.delete(job)
     db.session.commit()
     return redirect(url_for('index'))
 
-@app.route('/uploads/<filename>')
+@app.route('/static/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
@@ -95,4 +117,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 if __name__ == '__main__':
+    # FIX: Add this to see detailed logs
+    app.logger.setLevel("DEBUG")
+    print(f"📁 Upload folder path: {app.config['UPLOAD_FOLDER']}")
     app.run(debug=True)
