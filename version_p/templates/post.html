@@ -20,10 +20,9 @@
             text-align: center;
             margin-bottom: 2rem;
         }
-        .logo-svg {
-            width: 100px;
+        .logo-img {
+            width: 110px; /* Smaller size for form-focused page */
             height: auto;
-            fill: white;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
         .brand-title {
@@ -110,15 +109,9 @@
     <div class="container py-5">
         <!-- Logo & Title -->
         <div class="logo-container">
-            <svg class="logo-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-                <rect width="240" height="240" fill="#1a56a3"/>
-                <path d="M120 40L80 80L100 100L120 80L140 100L160 80L120 40Z" fill="white"/>
-                <path d="M100 100L80 120L100 140L120 120L100 100Z" fill="white"/>
-                <path d="M120 120L140 100L160 120L140 140L120 120Z" fill="white"/>
-                <path d="M140 140L160 160L120 200L100 160L140 140Z" fill="white"/>
-                <path d="M100 160L80 180L100 200L120 180L100 160Z" fill="white"/>
-                <text x="120" y="225" text-anchor="middle" fill="white" font-size="32" font-weight="700" font-family="sans-serif">FIXIFY</text>
-            </svg>
+            <img src="{{ url_for('static', filename='images/Fixify.png') }}" 
+                 alt="Fixify Logo" 
+                 class="logo-img">
             <h1 class="brand-title mt-3">Post a Home Service Job</h1>
             <p class="text-muted">Help is just one click away</p>
         </div>
