@@ -21,7 +21,7 @@
             margin-bottom: 2rem;
         }
         .logo-img {
-            width: 110px; /* Smaller size for form-focused page */
+            width: 110px;
             height: auto;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
@@ -103,6 +103,12 @@
             color: #6c757d;
             margin-top: 0.5rem;
         }
+        .budget-section {
+            background: #f8fbff;
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid #e0e7f0;
+        }
     </style>
 </head>
 <body>
@@ -123,12 +129,51 @@
                     <form method="POST" enctype="multipart/form-data">
                         <div class="mb-4">
                             <label class="form-label">Job Title</label>
-                            <input type="text" name="title" class="form-control form-control-lg" placeholder="e.g., Fix leaky faucet" required>
+                            <input type="text" name="title" class="form-control form-control-lg" placeholder="e.g, Fix leaky faucet" required>
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" rows="4" placeholder="Describe what you need help with..." required></textarea>
+                        </div>
+                        
+                        <!-- Budget Section -->
+                        <div class="mb-4 budget-section">
+                            <h5 class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-coin me-2" style="color: var(--fixify-blue);"></i>
+                                Budget Information
+                            </h5>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Your Budget Amount (£)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">£</span>
+                                    <input type="number" name="budget_amount" class="form-control" min="0" step="0.01" 
+                                           placeholder="e.g, 150" aria-label="Budget amount">
+                                </div>
+                                <div class="form-text">Leave blank if you're not sure about the budget</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Is this budget negotiable?</label>
+                                <div class="d-grid gap-2">
+                                    <div class="form-check p-3 border rounded">
+                                        <input class="form-check-input" type="radio" name="is_negotiable" id="negotiableYes" value="yes" checked>
+                                        <label class="form-check-label d-flex justify-content-between w-100" for="negotiableYes">
+                                            <span><i class="bi bi-check-circle-fill text-success me-2"></i> Yes, it's negotiable</span>
+                                            <small class="text-muted">Service providers can suggest a different price</small>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check p-3 border rounded">
+                                        <input class="form-check-input" type="radio" name="is_negotiable" id="negotiableNo" value="no">
+                                        <label class="form-check-label d-flex justify-content-between w-100" for="negotiableNo">
+                                            <span><i class="bi bi-x-circle-fill text-danger me-2"></i> No, this is my final offer</span>
+                                            <small class="text-muted">Service providers must accept this amount</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="mb-4">
@@ -205,7 +250,7 @@
 
                         <div class="mb-4">
                             <label class="form-label">Location</label>
-                            <input type="text" name="location" class="form-control" placeholder="e.g., Brooklyn, NY" required>
+                            <input type="text" name="location" class="form-control" placeholder="e.g, Brooklyn, NY" required>
                         </div>
 
                         <div class="d-grid gap-3">
@@ -218,21 +263,21 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <script>
-        function previewPhoto(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    var preview = document.getElementById('photo-preview');
-                    preview.innerHTML = '<img src="' + e.target.result + '" class="photo-preview" alt="Preview">';
+        
+        <script>
+            function previewPhoto(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        var preview = document.getElementById('photo-preview');
+                        preview.innerHTML = '<img src="' + e.target.result + '" class="photo-preview" alt="Preview">';
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
                 }
-                
-                reader.readAsDataURL(input.files[0]);
             }
-        }
-    </script>
+        </script>
+    </div>
 </body>
 </html>
