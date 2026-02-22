@@ -1,10 +1,11 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post a Job | Fixify</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
             --fixify-blue: #1a56a3;
@@ -61,18 +62,41 @@
             border-color: var(--fixify-blue);
             box-shadow: 0 0 0 0.25rem rgba(26, 86, 163, 0.25);
         }
+        .category-icon {
+            margin-right: 0.5rem;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+        }
+        .urgency-high {
+            background-color: #ffebee;
+            border-color: #ffcdd2;
+        }
+        .urgency-medium {
+            background-color: #fff8e1;
+            border-color: #ffecb3;
+        }
+        .urgency-low {
+            background-color: #e8f5e9;
+            border-color: #c8e6c9;
+        }
     </style>
 </head>
 <body>
     <div class="container py-5">
         <!-- Logo & Title -->
         <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/Fixify.png') }}" 
-                alt="Fixify Logo" 
-                class="logo-img"
-                width="150" height="150">
-            <h1 class="brand-title mt-3">Fixify</h1>
-            <p class="text-muted">Find trusted home service professionals fast & reliable</p>
+            <svg class="logo-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+                <rect width="240" height="240" fill="#1a56a3"/>
+                <path d="M120 40L80 80L100 100L120 80L140 100L160 80L120 40Z" fill="white"/>
+                <path d="M100 100L80 120L100 140L120 120L100 100Z" fill="white"/>
+                <path d="M120 120L140 100L160 120L140 140L120 120Z" fill="white"/>
+                <path d="M140 140L160 160L120 200L100 160L140 140Z" fill="white"/>
+                <path d="M100 160L80 180L100 200L120 180L100 160Z" fill="white"/>
+                <text x="120" y="225" text-anchor="middle" fill="white" font-size="32" font-weight="700" font-family="sans-serif">FIXIFY</text>
+            </svg>
+            <h1 class="brand-title mt-3">Post a Home Service Job</h1>
+            <p class="text-muted">Help is just one click away</p>
         </div>
 
         <!-- Form Card -->
@@ -88,6 +112,62 @@
                         <div class="mb-4">
                             <label class="form-label">Description</label>
                             <textarea name="description" class="form-control" rows="4" placeholder="Describe what you need help with..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="" disabled selected>Select a service category</option>
+                                <option value="Plumbing">💧 Plumbing</option>
+                                <option value="Electrical">⚡ Electrical</option>
+                                <option value="Cleaning">🧹 Cleaning</option>
+                                <option value="Gardening">🌿 Gardening</option>
+                                <option value="Painting">🎨 Painting</option>
+                                <option value="HVAC">❄️ HVAC</option>
+                                <option value="Carpentry">🪵 Carpentry</option>
+                                <option value="Other">🔧 Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Urgency Level</label>
+                            <div class="d-grid gap-2">
+                                <div class="form-check p-3 border rounded">
+                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyHigh" value="High" required>
+                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyHigh">
+                                        <span><i class="bi bi-exclamation-circle-fill text-danger me-2"></i> High Urgency</span>
+                                        <small class="text-muted">Immediate attention needed</small>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check p-3 border rounded">
+                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyMedium" value="Medium" required>
+                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyMedium">
+                                        <span><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i> Medium Urgency</span>
+                                        <small class="text-muted">Within 2-3 days</small>
+                                    </label>
+                                </div>
+                                
+                                <div class="form-check p-3 border rounded">
+                                    <input class="form-check-input" type="radio" name="urgency" id="urgencyLow" value="Low" required>
+                                    <label class="form-check-label d-flex justify-content-between w-100" for="urgencyLow">
+                                        <span><i class="bi bi-check-circle-fill text-success me-2"></i> Low Urgency</span>
+                                        <small class="text-muted">Within a week</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Preferred Timing</label>
+                            <select name="timing_window" class="form-select" required>
+                                <option value="" disabled selected>Select your preferred timing</option>
+                                <option value="Morning (8am-12pm)">🌅 Morning (8am-12pm)</option>
+                                <option value="Afternoon (12pm-5pm)">🌇 Afternoon (12pm-5pm)</option>
+                                <option value="Evening (5pm-9pm)">🌃 Evening (5pm-9pm)</option>
+                                <option value="Flexible">🔄 Flexible - I can adjust</option>
+                                <option value="Weekend Only">📅 Weekend Only</option>
+                            </select>
                         </div>
 
                         <div class="mb-4">
@@ -106,14 +186,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.js"></script>
 </body>
-</html>
-<html>
-<head>
-    <title>Post a Job</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
 </html>
