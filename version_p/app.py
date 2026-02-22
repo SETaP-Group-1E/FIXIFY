@@ -2,7 +2,7 @@
 
 #To open db
 #Press Ctrl+Shift+P
-#Type SQLite: New Query and select it
+#Type "SQLite: New Query" and select it
 
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
